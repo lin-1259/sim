@@ -1,4 +1,7 @@
+'use client'
+
 import Link from 'next/link'
+
 import { inter } from '@/app/_styles/fonts/inter/inter'
 import {
   ComplianceBadges,

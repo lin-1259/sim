@@ -8,12 +8,12 @@ import '@/app/_styles/globals.css'
 
 import { OneDollarStats } from '@/components/analytics/onedollarstats'
 import { HydrationErrorHandler } from '@/app/_shell/hydration-error-handler'
+import { LanguageHtmlAttribute } from '@/app/_shell/language-html-attribute'
 import { QueryProvider } from '@/app/_shell/providers/query-provider'
 import { SessionProvider } from '@/app/_shell/providers/session-provider'
 import { ThemeProvider } from '@/app/_shell/providers/theme-provider'
 import { ZoomPrevention } from '@/app/_shell/zoom-prevention'
 import { season } from '@/app/_styles/fonts/season/season'
-import { useI18nStore } from '@/lib/i18n/config'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -28,13 +28,14 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = generateBrandedMetadata()
 
+const DEFAULT_HTML_LANG = 'zh-CN' as const
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const structuredData = generateStructuredData()
   const themeCSS = generateThemeCSS()
-  const { language } = useI18nStore()
 
   return (
-    <html lang={language} suppressHydrationWarning>
+    <html lang={DEFAULT_HTML_LANG} suppressHydrationWarning>
       <head>
         {/* Structured Data for SEO */}
         <script
@@ -187,6 +188,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${season.variable} font-season`} suppressHydrationWarning>
         <HydrationErrorHandler />
+        <LanguageHtmlAttribute />
         <OneDollarStats />
         <PostHogProvider>
           <ThemeProvider>

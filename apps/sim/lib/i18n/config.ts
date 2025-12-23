@@ -1,3 +1,5 @@
+'use client'
+
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
@@ -8,11 +10,14 @@ export interface I18nConfig {
   setLanguage: (language: Language) => void
 }
 
+/**
+ * Client-side language preference store.
+ */
 export const useI18nStore = create<I18nConfig>()(
   persist(
     (set) => ({
-      language: 'zh-CN', // 默认中文
-      setLanguage: (language: Language) => set({ language }),
+      language: 'zh-CN',
+      setLanguage: (language) => set({ language }),
     }),
     {
       name: 'sim-i18n-config',
@@ -21,14 +26,12 @@ export const useI18nStore = create<I18nConfig>()(
   )
 )
 
-// 语言映射
 export const languageMap: Record<Language, string> = {
   'zh-CN': '中文',
   'en-US': 'English',
 }
 
-// 导航语言选项
-export const languageOptions: Array<{ code: Language; name: string }> = [
+export const languageOptions = [
   { code: 'zh-CN', name: '中文' },
   { code: 'en-US', name: 'English' },
-]
+] as const satisfies ReadonlyArray<{ code: Language; name: string }>
