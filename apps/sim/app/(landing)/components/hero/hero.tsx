@@ -42,34 +42,16 @@ import {
   type LandingManualBlock,
   type LandingViewportApi,
 } from '@/app/(landing)/components/hero/components'
-
-/**
- * Service-specific template messages for the hero input
- */
-const SERVICE_TEMPLATES = {
-  slack: 'Summarizer agent that summarizes each new message in #general and sends me a DM',
-  gmail: 'Alert agent that flags important Gmail messages in my inbox',
-  outlook:
-    'Auto-forwarding agent that classifies each new Outlook email and forwards to separate inboxes for further analysis',
-  pinecone: 'RAG chat agent that uses memories stored in Pinecone',
-  supabase: 'Natural language to SQL agent to query and update data in Supabase',
-  linear: 'Agent that uses Linear to triage issues, assign owners, and draft updates',
-  discord: 'Moderator agent that responds back to users in my Discord server',
-  airtable: 'Alert agent that validates each new record in a table and prepares a weekly report',
-  stripe: 'Agent that analyzes Stripe payment history to spot churn risks and generate summaries',
-  notion: 'Support agent that appends new support tickets to my Notion workspace',
-  googleSheets: 'Data science agent that analyzes Google Sheets data and generates insights',
-  googleDrive: 'Drive reader agent that summarizes content in my Google Drive',
-  jira: 'Engineering manager agent that uses Jira to update ticket statuses, generate sprint reports, and identify blockers',
-} as const
+import { useI18n } from '@/lib/i18n/hooks'
+import { isMobileDevice } from '@/lib/i18n/hooks'
 
 /**
  * Landing blocks for the canvas preview
  */
-const LANDING_BLOCKS: LandingManualBlock[] = [
+const getLandingBlocks = (t: any): LandingManualBlock[] => [
   {
     id: 'schedule',
-    name: 'Schedule',
+    name: t('hero.canvas.schedule'),
     color: '#7B68EE',
     icon: <ScheduleIcon className='h-4 w-4' />,
     positions: {
@@ -78,13 +60,13 @@ const LANDING_BLOCKS: LandingManualBlock[] = [
       desktop: { x: 60, y: 180 },
     },
     tags: [
-      { icon: <CalendarIcon className='h-3 w-3' />, label: '09:00AM Daily' },
-      { icon: <Globe2Icon className='h-3 w-3' />, label: 'PST' },
+      { icon: <CalendarIcon className='h-3 w-3' />, label: t('hero.canvas.dailySchedule') },
+      { icon: <Globe2Icon className='h-3 w-3' />, label: t('hero.canvas.timezone') },
     ],
   },
   {
     id: 'knowledge',
-    name: 'Knowledge',
+    name: t('hero.canvas.knowledge'),
     color: '#00B0B0',
     icon: <PackageSearchIcon className='h-4 w-4' />,
     positions: {
@@ -93,13 +75,13 @@ const LANDING_BLOCKS: LandingManualBlock[] = [
       desktop: { x: 420, y: 241 },
     },
     tags: [
-      { icon: <BookIcon className='h-3 w-3' />, label: 'Product Vector DB' },
-      { icon: <BinaryIcon className='h-3 w-3' />, label: 'Limit: 10' },
+      { icon: <BookIcon className='h-3 w-3' />, label: t('hero.canvas.productVectorDB') },
+      { icon: <BinaryIcon className='h-3 w-3' />, label: t('hero.canvas.limit') },
     ],
   },
   {
     id: 'agent',
-    name: 'Agent',
+    name: t('hero.canvas.agent'),
     color: '#802FFF',
     icon: <AgentIcon className='h-4 w-4' />,
     positions: {
@@ -108,13 +90,13 @@ const LANDING_BLOCKS: LandingManualBlock[] = [
       desktop: { x: 880, y: 142 },
     },
     tags: [
-      { icon: <OpenAIIcon className='h-3 w-3' />, label: 'gpt-5' },
-      { icon: <MessageSquareIcon className='h-3 w-3' />, label: 'You are a support ag...' },
+      { icon: <OpenAIIcon className='h-3 w-3' />, label: t('hero.canvas.model') },
+      { icon: <MessageSquareIcon className='h-3 w-3' />, label: t('hero.canvas.role') },
     ],
   },
   {
     id: 'function',
-    name: 'Function',
+    name: t('hero.canvas.function'),
     color: '#FF402F',
     icon: <CodeIcon className='h-4 w-4' />,
     positions: {
@@ -123,8 +105,8 @@ const LANDING_BLOCKS: LandingManualBlock[] = [
       desktop: { x: 880, y: 340 },
     },
     tags: [
-      { icon: <CodeIcon className='h-3 w-3' />, label: 'Python' },
-      { icon: <VariableIcon className='h-3 w-3' />, label: 'time = "2025-09-01...' },
+      { icon: <CodeIcon className='h-3 w-3' />, label: t('hero.canvas.python') },
+      { icon: <VariableIcon className='h-3 w-3' />, label: t('hero.canvas.timeVar') },
     ],
   },
 ]
@@ -143,6 +125,26 @@ const SAMPLE_WORKFLOW_EDGES = [
  */
 export default function Hero() {
   const router = useRouter()
+  const { t } = useI18n()
+
+  /**
+   * Service-specific template messages for the hero input
+   */
+  const SERVICE_TEMPLATES = {
+    slack: t('hero.templates.slack'),
+    gmail: t('hero.templates.gmail'),
+    outlook: t('hero.templates.outlook'),
+    pinecone: t('hero.templates.pinecone'),
+    supabase: t('hero.templates.supabase'),
+    linear: t('hero.templates.linear'),
+    discord: t('hero.templates.discord'),
+    airtable: t('hero.templates.airtable'),
+    stripe: t('hero.templates.stripe'),
+    notion: t('hero.templates.notion'),
+    googleSheets: t('hero.templates.googleSheets'),
+    googleDrive: t('hero.templates.googleDrive'),
+    jira: t('hero.templates.jira'),
+  } as const
 
   /**
    * State management for the text input
@@ -207,19 +209,19 @@ export default function Hero() {
     label: string
     style?: React.CSSProperties
   }> = [
-    { key: 'slack', icon: SlackIcon, label: 'Slack' },
-    { key: 'gmail', icon: GmailIcon, label: 'Gmail' },
-    { key: 'outlook', icon: OutlookIcon, label: 'Outlook' },
-    { key: 'pinecone', icon: PineconeIcon, label: 'Pinecone' },
-    { key: 'supabase', icon: SupabaseIcon, label: 'Supabase' },
-    { key: 'linear', icon: LinearIcon, label: 'Linear', style: { color: '#5E6AD2' } },
-    { key: 'discord', icon: DiscordIcon, label: 'Discord', style: { color: '#5765F2' } },
-    { key: 'airtable', icon: AirtableIcon, label: 'Airtable' },
-    { key: 'stripe', icon: StripeIcon, label: 'Stripe', style: { color: '#635BFF' } },
-    { key: 'notion', icon: NotionIcon, label: 'Notion' },
-    { key: 'googleSheets', icon: GoogleSheetsIcon, label: 'Google Sheets' },
-    { key: 'googleDrive', icon: GoogleDriveIcon, label: 'Google Drive' },
-    { key: 'jira', icon: JiraIcon, label: 'Jira' },
+    { key: 'slack', icon: SlackIcon, label: t('hero.integrations.slack') },
+    { key: 'gmail', icon: GmailIcon, label: t('hero.integrations.gmail') },
+    { key: 'outlook', icon: OutlookIcon, label: t('hero.integrations.outlook') },
+    { key: 'pinecone', icon: PineconeIcon, label: t('hero.integrations.pinecone') },
+    { key: 'supabase', icon: SupabaseIcon, label: t('hero.integrations.supabase') },
+    { key: 'linear', icon: LinearIcon, label: t('hero.integrations.linear'), style: { color: '#5E6AD2' } },
+    { key: 'discord', icon: DiscordIcon, label: t('hero.integrations.discord'), style: { color: '#5765F2' } },
+    { key: 'airtable', icon: AirtableIcon, label: t('hero.integrations.airtable') },
+    { key: 'stripe', icon: StripeIcon, label: t('hero.integrations.stripe'), style: { color: '#635BFF' } },
+    { key: 'notion', icon: NotionIcon, label: t('hero.integrations.notion') },
+    { key: 'googleSheets', icon: GoogleSheetsIcon, label: t('hero.integrations.googleSheets') },
+    { key: 'googleDrive', icon: GoogleDriveIcon, label: t('hero.integrations.googleDrive') },
+    { key: 'jira', icon: JiraIcon, label: t('hero.integrations.jira') },
   ]
 
   /**
@@ -301,6 +303,8 @@ export default function Hero() {
           ? 'tablet'
           : 'desktop'
 
+    const LANDING_BLOCKS = getLandingBlocks(t)
+
     // Convert landing blocks to React Flow nodes
     const nodes: Node[] = [
       // Add the loop block node as a group with custom rendering
@@ -309,7 +313,7 @@ export default function Hero() {
         type: 'group',
         position: { x: 720, y: 20 },
         data: {
-          label: 'Loop',
+          label: t('hero.canvas.loop'),
         },
         draggable: false,
         selectable: false,
@@ -380,7 +384,7 @@ export default function Hero() {
     // Calculate world width for canvas
     const maxX = Math.max(...nodes.map((n) => n.position.x))
     setWorldWidth(maxX + CARD_WIDTH + 32)
-  }, [])
+  }, [t])
 
   return (
     <section
@@ -392,10 +396,10 @@ export default function Hero() {
         id='hero-heading'
         className='px-4 text-center font-medium text-[36px] leading-none tracking-tight sm:px-0 sm:text-[74px]'
       >
-        Workflows for LLMs
+        {t('hero.title')}
       </h1>
       <p className='px-4 pt-[6px] text-center text-[18px] opacity-70 sm:px-0 sm:pt-[10px] sm:text-[22px]'>
-        Build and deploy AI agent workflows
+        {t('hero.subtitle')}
       </p>
       <div
         className='flex items-center justify-center gap-[2px] pt-[18px] sm:pt-[32px]'
@@ -422,13 +426,11 @@ export default function Hero() {
       <div className='flex w-full items-center justify-center px-4 pt-[8px] sm:px-8 sm:pt-[12px] md:px-[50px]'>
         <div className='relative w-full sm:w-[640px]'>
           <label htmlFor='agent-description' className='sr-only'>
-            Describe the AI agent you want to build
+            {t('hero.describeAgent')}
           </label>
           <textarea
             id='agent-description'
-            placeholder={
-              isMobile ? 'Build an AI agent...' : 'Ask Sim to build an agent to read my emails...'
-            }
+            placeholder={isMobile ? t('hero.placeholderMobile') : t('hero.placeholderDesktop')}
             className='h-[100px] w-full resize-none px-3 py-2.5 text-sm sm:h-[120px] sm:px-4 sm:py-3 sm:text-base'
             value={textValue}
             onChange={(e) => setTextValue(e.target.value)}
@@ -445,7 +447,7 @@ export default function Hero() {
           <button
             key={isEmpty ? 'empty' : 'filled'}
             type='button'
-            aria-label='Submit description'
+            aria-label={t('hero.submit')}
             className='absolute right-2.5 bottom-4 flex h-[30px] w-[30px] items-center justify-center transition-all duration-200 sm:right-[11px] sm:bottom-[16px] sm:h-[34px] sm:w-[34px]'
             disabled={isEmpty}
             onClick={handleSubmit}

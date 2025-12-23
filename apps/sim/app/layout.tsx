@@ -13,6 +13,7 @@ import { SessionProvider } from '@/app/_shell/providers/session-provider'
 import { ThemeProvider } from '@/app/_shell/providers/theme-provider'
 import { ZoomPrevention } from '@/app/_shell/zoom-prevention'
 import { season } from '@/app/_styles/fonts/season/season'
+import { useI18nStore } from '@/lib/i18n/config'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -30,9 +31,10 @@ export const metadata: Metadata = generateBrandedMetadata()
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const structuredData = generateStructuredData()
   const themeCSS = generateThemeCSS()
+  const { language } = useI18nStore()
 
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html lang={language} suppressHydrationWarning>
       <head>
         {/* Structured Data for SEO */}
         <script

@@ -11,6 +11,8 @@ import { isHosted } from '@/lib/core/config/feature-flags'
 import { createLogger } from '@/lib/logs/console/logger'
 import { soehne } from '@/app/_styles/fonts/soehne/soehne'
 import { getFormattedGitHubStars } from '@/app/(landing)/actions/github'
+import { useI18n } from '@/lib/i18n/hooks'
+import { LanguageSwitcher } from '@/components/language-switcher'
 
 const logger = createLogger('nav')
 
@@ -25,6 +27,7 @@ export default function Nav({ hideAuthButtons = false, variant = 'landing' }: Na
   const [isLoginHovered, setIsLoginHovered] = useState(false)
   const router = useRouter()
   const brand = useBrandConfig()
+  const { t } = useI18n()
 
   useEffect(() => {
     if (variant !== 'landing') return
@@ -66,7 +69,7 @@ export default function Nav({ hideAuthButtons = false, variant = 'landing' }: Na
           className='text-[16px] text-muted-foreground transition-colors hover:text-foreground'
           prefetch={false}
         >
-          Docs
+          {t('nav.docs')}
         </Link>
       </li>
       <li>
@@ -75,7 +78,7 @@ export default function Nav({ hideAuthButtons = false, variant = 'landing' }: Na
           className='text-[16px] text-muted-foreground transition-colors hover:text-foreground'
           scroll={true}
         >
-          Pricing
+          {t('nav.pricing')}
         </Link>
       </li>
       <li>
@@ -83,9 +86,9 @@ export default function Nav({ hideAuthButtons = false, variant = 'landing' }: Na
           onClick={handleEnterpriseClick}
           className='text-[16px] text-muted-foreground transition-colors hover:text-foreground'
           type='button'
-          aria-label='Contact for Enterprise pricing'
+          aria-label={t('nav.enterprise')}
         >
-          Enterprise
+          {t('nav.enterprise')}
         </button>
       </li>
       <li>
@@ -93,7 +96,7 @@ export default function Nav({ hideAuthButtons = false, variant = 'landing' }: Na
           href='/careers'
           className='text-[16px] text-muted-foreground transition-colors hover:text-foreground'
         >
-          Careers
+          {t('nav.careers')}
         </Link>
       </li>
       <li>
@@ -166,10 +169,10 @@ export default function Nav({ hideAuthButtons = false, variant = 'landing' }: Na
             onMouseLeave={() => setIsLoginHovered(false)}
             className='group hidden text-[#2E2E2E] text-[16px] transition-colors hover:text-foreground md:block'
             type='button'
-            aria-label='Log in to your account'
+            aria-label={t('auth.login.loginButton')}
           >
             <span className='flex items-center gap-1'>
-              Log in
+              {t('nav.login')}
               <span className='inline-flex transition-transform duration-200 group-hover:translate-x-0.5'>
                 {isLoginHovered ? (
                   <ArrowRight className='h-4 w-4' aria-hidden='true' />
@@ -184,11 +187,11 @@ export default function Nav({ hideAuthButtons = false, variant = 'landing' }: Na
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
             className='group inline-flex items-center justify-center gap-2 rounded-[10px] border border-[#6F3DFA] bg-gradient-to-b from-[#8357FF] to-[#6F3DFA] py-[6px] pr-[10px] pl-[12px] text-[14px] text-white shadow-[inset_0_2px_4px_0_#9B77FF] transition-all sm:text-[16px]'
-            aria-label='Get started with Sim - Sign up for free'
+            aria-label={t('nav.getStarted')}
             prefetch={true}
           >
             <span className='flex items-center gap-1'>
-              Get started
+              {t('nav.getStarted')}
               <span className='inline-flex transition-transform duration-200 group-hover:translate-x-0.5'>
                 {isHovered ? (
                   <ArrowRight className='h-4 w-4' aria-hidden='true' />
@@ -198,6 +201,8 @@ export default function Nav({ hideAuthButtons = false, variant = 'landing' }: Na
               </span>
             </span>
           </Link>
+          {/* Language Switcher */}
+          <LanguageSwitcher variant='icon' />
         </div>
       )}
     </nav>
