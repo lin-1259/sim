@@ -20,6 +20,7 @@ import {
   PRO_PLAN_FEATURES,
   TEAM_PLAN_FEATURES,
 } from '@/app/workspace/[workspaceId]/w/components/sidebar/components/settings-modal/components/subscription/plan-configs'
+import { useI18n } from '@/lib/i18n/hooks'
 
 const logger = createLogger('LandingPricing')
 
@@ -37,51 +38,55 @@ interface PricingTier {
   featured?: boolean
 }
 
-/**
- * Free plan features with consistent icons
- */
-const FREE_PLAN_FEATURES: PricingFeature[] = [
-  { icon: DollarSign, text: '$10 usage limit' },
-  { icon: HardDrive, text: '5GB file storage' },
-  { icon: Workflow, text: 'Public template access' },
-  { icon: Database, text: 'Limited log retention' },
-  { icon: Code2, text: 'CLI/SDK Access' },
-]
+export default function LandingPricing() {
+  const { t } = useI18n()
+  const router = useRouter()
 
-/**
- * Available pricing tiers with their features and pricing
- */
-const pricingTiers: PricingTier[] = [
-  {
-    name: 'COMMUNITY',
-    tier: 'Free',
-    price: 'Free',
-    features: FREE_PLAN_FEATURES,
-    ctaText: 'Get Started',
-  },
-  {
-    name: 'PRO',
-    tier: 'Pro',
-    price: '$20/mo',
-    features: PRO_PLAN_FEATURES,
-    ctaText: 'Get Started',
-    featured: true,
-  },
-  {
-    name: 'TEAM',
-    tier: 'Team',
-    price: '$40/mo',
-    features: TEAM_PLAN_FEATURES,
-    ctaText: 'Get Started',
-  },
-  {
-    name: 'ENTERPRISE',
-    tier: 'Enterprise',
-    price: 'Custom',
-    features: ENTERPRISE_PLAN_FEATURES,
-    ctaText: 'Contact Sales',
-  },
-]
+  /**
+   * Free plan features with consistent icons
+   */
+  const FREE_PLAN_FEATURES: PricingFeature[] = [
+    { icon: DollarSign, text: t('pricing.features.usageLimit') },
+    { icon: HardDrive, text: t('pricing.features.fileStorage') },
+    { icon: Workflow, text: t('pricing.features.publicTemplate') },
+    { icon: Database, text: t('pricing.features.logRetention') },
+    { icon: Code2, text: t('pricing.features.cliSdkAccess') },
+  ]
+
+  /**
+   * Available pricing tiers with their features and pricing
+   */
+  const pricingTiers: PricingTier[] = [
+    {
+      name: 'COMMUNITY',
+      tier: t('pricing.community'),
+      price: t('pricing.free'),
+      features: FREE_PLAN_FEATURES,
+      ctaText: t('pricing.getStarted'),
+    },
+    {
+      name: 'PRO',
+      tier: t('pricing.pro'),
+      price: t('pricing.pro') + t('pricing.monthly'),
+      features: PRO_PLAN_FEATURES,
+      ctaText: t('pricing.getStarted'),
+      featured: true,
+    },
+    {
+      name: 'TEAM',
+      tier: t('pricing.team'),
+      price: t('pricing.team') + t('pricing.monthly'),
+      features: TEAM_PLAN_FEATURES,
+      ctaText: t('pricing.getStarted'),
+    },
+    {
+      name: 'ENTERPRISE',
+      tier: t('pricing.enterprise'),
+      price: t('pricing.custom'),
+      features: ENTERPRISE_PLAN_FEATURES,
+      ctaText: t('pricing.contactSales'),
+    },
+  ]
 
 /**
  * Individual pricing card component

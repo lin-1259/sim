@@ -7,12 +7,15 @@ import {
   StatusIndicator,
 } from '@/app/(landing)/components/footer/components'
 import { FOOTER_BLOCKS, FOOTER_TOOLS } from '@/app/(landing)/components/footer/consts'
+import { useI18n } from '@/lib/i18n/hooks'
 
 interface FooterProps {
   fullWidth?: boolean
 }
 
 export default function Footer({ fullWidth = false }: FooterProps) {
+  const { t } = useI18n()
+
   return (
     <footer className={`${inter.className} relative w-full overflow-hidden bg-white`}>
       <div
@@ -33,7 +36,7 @@ export default function Footer({ fullWidth = false }: FooterProps) {
 
           {/* Links section */}
           <div>
-            <h2 className='mb-[16px] font-medium text-[14px] text-foreground'>More Sim</h2>
+            <h2 className='mb-[16px] font-medium text-[14px] text-foreground'>{t('footer.moreSim')}</h2>
             <div className='flex flex-col gap-[12px]'>
               <Link
                 href='https://docs.sim.ai'
@@ -41,13 +44,13 @@ export default function Footer({ fullWidth = false }: FooterProps) {
                 rel='noopener noreferrer'
                 className='text-[14px] text-muted-foreground transition-colors hover:text-foreground'
               >
-                Docs
+                {t('nav.docs')}
               </Link>
               <Link
                 href='#pricing'
                 className='text-[14px] text-muted-foreground transition-colors hover:text-foreground'
               >
-                Pricing
+                {t('nav.pricing')}
               </Link>
               <Link
                 href='https://form.typeform.com/to/jqCO12pF'
