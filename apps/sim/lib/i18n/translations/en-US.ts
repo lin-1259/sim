@@ -65,7 +65,9 @@ export const enUS = {
   hero: {
     title: 'Workflows for LLMs',
     subtitle: 'Build and deploy AI agent workflows',
-    placeholder: isMobile => isMobile ? 'Build an AI agent...' : 'Ask Sim to build an agent to read my emails...',
+    placeholder: 'Describe the AI agent you want to build',
+    placeholderMobile: 'Build an AI agent...',
+    placeholderDesktop: 'Ask Sim to build an agent to read my emails...',
     describeAgent: 'Describe the AI agent you want to build',
     submit: 'Submit description',
     integrations: {

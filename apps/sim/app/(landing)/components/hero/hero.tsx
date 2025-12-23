@@ -42,13 +42,12 @@ import {
   type LandingManualBlock,
   type LandingViewportApi,
 } from '@/app/(landing)/components/hero/components'
-import { useI18n } from '@/lib/i18n/hooks'
-import { isMobileDevice } from '@/lib/i18n/hooks'
+import { useI18n, type Translate } from '@/lib/i18n/hooks'
 
 /**
  * Landing blocks for the canvas preview
  */
-const getLandingBlocks = (t: any): LandingManualBlock[] => [
+const getLandingBlocks = (t: Translate): LandingManualBlock[] => [
   {
     id: 'schedule',
     name: t('hero.canvas.schedule'),
